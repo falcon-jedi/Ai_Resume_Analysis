@@ -18,7 +18,7 @@ jobs:
 
       # Pin to a concrete tag instead of v4 or 4.*.*
       - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v4.5.0
+        uses: actions/dependency-review-action@v5.0.0
 
         with:
           fail-on-severity: high
