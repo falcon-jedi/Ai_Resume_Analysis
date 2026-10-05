@@ -1,0 +1,363 @@
+/* =============================================================================
+   Professional CV Template Style
+   Designed for: Classic, Clean, Modern, Print & ATS-Friendly Output
+   ========================================================================== */
+
+/* ─── Reset & Base Styles ────────────────────────────────────────────────── */
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, 'Segoe UI', Arial, Helvetica, sans-serif;
+  color: #1f2937; /* Neutral 800 - dark charcoal, not pure black for premium feel */
+  background-color: #f3f4f6; /* Neutral 100 - light background for screen preview */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Container / Page Layout (A4 Profile) ──────────────────────────────── */
+
+.container {
+  box-sizing: border-box;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 40px auto;
+  padding: 20mm 20mm;
+  background-color: #ffffff;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.content {
+  margin-top: 24px;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+header {
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb; /* Subtle dividing line */
+  margin-bottom: 24px;
+}
+
+#name {
+  margin: 0 0 6px 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #111827; /* Darkest slate */
+}
+
+#designation {
+  margin-bottom: 16px;
+}
+
+#designation .title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4b5563; /* Neutral 600 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+#designation .organization {
+  font-size: 15px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+#designation .organization::before {
+  content: ' at ';
+  color: #9ca3af;
+}
+
+/* Contact Info Layout */
+header .contact {
+  display: block;
+  overflow: hidden;
+  margin: 0 -8px;
+}
+
+header .contact > div {
+  float: left;
+  margin: 4px 8px;
+  font-size: 13px;
+  color: #4b5563;
+  font-weight: 450;
+}
+
+/* Contact icons fallback / bullets */
+header .contact > div::after {
+  content: ' •';
+  margin-left: 8px;
+  color: #d1d5db;
+}
+
+header .contact > div:last-child::after {
+  content: '';
+}
+
+/* ─── Section Typography & Elements ────────────────────────────────────── */
+
+section {
+  margin-bottom: 28px;
+  page-break-inside: avoid; /* Prevent section split */
+}
+
+section > .title {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1.5px solid #d1d5db;
+  padding-bottom: 4px;
+}
+
+.description p {
+  margin: 0 0 10px 0;
+  font-size: 13.5px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.description p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Education Table ────────────────────────────────────────────────────── */
+
+#Education table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+}
+
+#Education thead tr td {
+  font-weight: 650;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4b5563;
+  background-color: #f9fafb;
+  border-bottom: 1.5px solid #e5e7eb;
+}
+
+#Education td {
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid #f3f4f6;
+  border-bottom: 1.5px solid #f3f4f6;
+  color: #374151;
+}
+
+#Education tbody tr:hover td {
+  background-color: #f9fafb;
+}
+
+/* ─── Experience & Projects ──────────────────────────────────────────────── */
+
+.project {
+  margin-bottom: 20px;
+  page-break-inside: avoid;
+}
+
+.project:last-child {
+  margin-bottom: 0;
+}
+
+.project > .title {
+  margin: 0 0 4px 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.project > .meta {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.project > .meta > .field {
+  float: left;
+}
+
+.project > .meta > .date {
+  float: right;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.project > p.description {
+  margin: 0 0 8px 0;
+  font-size: 13.5px;
+  color: #4b5563;
+  line-height: 1.65;
+}
+
+.project .technologies {
+  font-size: 12.5px;
+  margin-top: 6px;
+  color: #374151;
+}
+
+.project .technologies strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.project .project-link {
+  font-size: 12.5px;
+  color: #3b82f6; /* Modern subtle blue link */
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+/* ─── Technical Skills (Pill Tags) ───────────────────────────────────────── */
+
+#skills .description ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden; /* Clearfix behavior for float */
+}
+
+#skills .description li {
+  float: left;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 550;
+  padding: 4px 10px;
+  margin: 0 6px 6px 0;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+/* ─── Other Lists (Certifications, Achievements, Languages) ──────────────── */
+
+#certifications .description ul,
+#achievements .description ul,
+#languages .description ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#certifications .description li,
+#achievements .description li,
+#languages .description li {
+  font-size: 13.5px;
+  color: #374151;
+  padding: 3px 0 3px 14px;
+  position: relative;
+}
+
+#certifications .description li::before,
+#achievements .description li::before,
+#languages .description li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #9ca3af;
+  font-weight: bold;
+}
+
+/* ─── References ─────────────────────────────────────────────────────────── */
+
+#references .description p {
+  font-size: 13.5px;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+#references .description p strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* ─── Declaration ────────────────────────────────────────────────────────── */
+
+#declaration .description p {
+  font-style: italic;
+  color: #4b5563;
+}
+
+/* ─── Clearfix helper ────────────────────────────────────────────────────── */
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+/* ─── Print & PDF Styles ─────────────────────────────────────────────────── */
+
+/* ─── Page Break Control ──────────────────────────────────────────────────── */
+
+/* Keep individual job/project entries together — prevents heading split */
+section.project {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Keep section headings with the first item below them */
+section > h2 {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+/* Keep table rows intact */
+tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+@media print {
+  body {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    min-height: auto;
+  }
+
+  a {
+    color: #000000;
+    text-decoration: underline;
+  }
+
+  hr {
+    border-color: #000;
+  }
+
+  /* Keep background shading in printing for tags/headers */
+  #skills .description li {
+    background-color: #f3f4f6 !important;
+    border-color: #e5e7eb !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #Education thead tr td {
+    background-color: #f9fafb !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

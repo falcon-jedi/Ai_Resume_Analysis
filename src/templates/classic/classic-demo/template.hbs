@@ -1,0 +1,469 @@
+<html lang='en-US'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>{{#if metadata.title}}{{metadata.title}}{{else}}{{personal.name}} Resume{{/if}}</title>
+
+    <link rel='stylesheet' href='style.css' />
+  </head>
+
+  <body>
+    <div class='container'>
+
+      <header>
+
+        <h1 id='name'>
+          {{personal.name}}
+        </h1>
+
+        {{#if personal.jobTitle}}
+          <div id='designation'>
+
+            <span class='title'>
+              {{personal.jobTitle}}
+            </span>
+
+            {{#if personal.organization}}
+              <span class='organization'>
+                {{personal.organization}}
+              </span>
+            {{/if}}
+
+          </div>
+        {{/if}}
+
+        <div class='contact'>
+
+          {{#if personal.email}}
+            <div class='email'>
+              {{personal.email}}
+            </div>
+          {{/if}}
+
+          {{#if personal.phone}}
+            <div class='phone'>
+              {{personal.phone}}
+            </div>
+          {{/if}}
+
+          {{#if personal.location}}
+            <div class='location'>
+              {{personal.location}}
+            </div>
+          {{/if}}
+
+          {{#if personal.website}}
+            <div class='website'>
+              {{personal.website}}
+            </div>
+          {{/if}}
+
+          {{#if personal.linkedin}}
+            <div class='linkedin'>
+              {{personal.linkedin}}
+            </div>
+          {{/if}}
+
+          {{#if personal.github}}
+            <div class='github'>
+              {{personal.github}}
+            </div>
+          {{/if}}
+
+        </div>
+
+      </header>
+
+      <div class='content' role='main'>
+
+        {{#if summary}}
+          <section id='objective'>
+
+            <h2 class='title'>
+              Objective
+            </h2>
+
+            <div class='description'>
+
+              <p>
+                {{summary}}
+              </p>
+
+            </div>
+
+          </section>
+        {{/if}}
+
+        {{#if education.length}}
+
+          <section id='Education'>
+
+            <h2 class='title'>
+              Education
+            </h2>
+
+            <div class='description'>
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <td>Duration</td>
+                    <td>Qualification</td>
+                    <td>Institute/School</td>
+                    <td>Result</td>
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {{#each education}}
+
+                    <tr>
+
+                      <td>
+
+                        {{#if startDate}}
+                          {{startDate}}
+                        {{/if}}
+
+                        {{#if endDate}}
+                          -
+                          {{endDate}}
+                        {{/if}}
+
+                      </td>
+
+                      <td>
+                        {{degree}}
+                      </td>
+
+                      <td>
+                        {{institution}}
+                      </td>
+
+                      <td>
+                        {{result}}
+                      </td>
+
+                    </tr>
+
+                  {{/each}}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if experience.length}}
+
+          <section id='experience'>
+
+            <h2 class='title'>
+              Experience
+            </h2>
+
+            <div class='description'>
+
+              {{#each experience}}
+
+                <section class='project'>
+
+                  <h3 class='title'>
+                    {{position}}
+                  </h3>
+
+                  <div class='meta'>
+
+                    <span class='field'>
+                      {{company}}
+                    </span>
+
+                    <span class='date'>
+
+                      {{#if startDate}}
+                        {{startDate}}
+                      {{/if}}
+
+                      {{#if endDate}}
+                        -
+                        {{endDate}}
+                      {{else}}
+                        - Present
+                      {{/if}}
+
+                    </span>
+
+                  </div>
+
+                  <p class='description'>
+                    {{description}}
+                  </p>
+
+                </section>
+
+              {{/each}}
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if projects.length}}
+
+          <section id='projects'>
+
+            <h2 class='title'>
+              Projects Undertaken
+            </h2>
+
+            <div class='description'>
+
+              {{#each projects}}
+
+                <section class='project'>
+
+                  <h3 class='title'>
+                    {{title}}
+                  </h3>
+
+                  <div class='meta'>
+
+                    {{#if field}}
+                      <span class='field'>
+                        {{field}}
+                      </span>
+                    {{/if}}
+
+                    <span class='date'>
+
+                      {{#if startDate}}
+                        {{startDate}}
+                      {{/if}}
+
+                      {{#if endDate}}
+                        -
+                        {{endDate}}
+                      {{/if}}
+
+                    </span>
+
+                  </div>
+
+                  <p class='description'>
+                    {{description}}
+                  </p>
+
+                  {{#if technologies.length}}
+
+                    <div class='technologies'>
+
+                      <strong>Technologies:</strong>
+
+                      {{#each technologies}}
+
+                        {{this}}{{#unless @last}}, {{/unless}}
+
+                      {{/each}}
+
+                    </div>
+
+                  {{/if}}
+
+                  {{#if link}}
+
+                    <div class='project-link'>
+                      {{link}}
+                    </div>
+
+                  {{/if}}
+
+                </section>
+
+              {{/each}}
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if skills.length}}
+
+          <section id='skills'>
+
+            <h2 class='title'>
+              Technical Skills
+            </h2>
+
+            <div class='description'>
+
+              <ul>
+
+                {{#each skills}}
+
+                  <li>{{this}}</li>
+
+                {{/each}}
+
+              </ul>
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if certifications.length}}
+
+          <section id='certifications'>
+
+            <h2 class='title'>
+              Certifications
+            </h2>
+
+            <div class='description'>
+
+              <ul>
+
+                {{#each certifications}}
+
+                  <li>{{name}}</li>
+
+                {{/each}}
+
+              </ul>
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if achievements.length}}
+
+          <section id='achievements'>
+
+            <h2 class='title'>
+              Achievements
+            </h2>
+
+            <div class='description'>
+
+              <ul>
+
+                {{#each achievements}}
+
+                  <li>{{title}}</li>
+
+                {{/each}}
+
+              </ul>
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if languages.length}}
+
+          <section id='languages'>
+
+            <h2 class='title'>
+              Languages
+            </h2>
+
+            <div class='description'>
+
+              <ul>
+
+                {{#each languages}}
+
+                  <li>{{this}}</li>
+
+                {{/each}}
+
+              </ul>
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if references.length}}
+
+          <section id='references'>
+
+            <h2 class='title'>
+              References
+            </h2>
+
+            <div class='description'>
+
+              {{#each references}}
+
+                <p>
+
+                  <strong>{{name}}</strong>
+
+                  {{#if designation}}
+                    -
+                    {{designation}}
+                  {{/if}}
+
+                  {{#if company}}
+                    ({{company}})
+                  {{/if}}
+
+                  {{#if email}}
+                    -
+                    {{email}}
+                  {{/if}}
+
+                </p>
+
+              {{/each}}
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+        {{#if declaration}}
+
+          <section id='declaration'>
+
+            <h2 class='title'>
+              Declaration
+            </h2>
+
+            <div class='description'>
+
+              <p>
+
+                {{declaration}}
+
+              </p>
+
+            </div>
+
+          </section>
+
+        {{/if}}
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

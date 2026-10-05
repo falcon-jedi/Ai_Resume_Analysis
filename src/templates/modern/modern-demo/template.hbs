@@ -1,0 +1,326 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>{{#if metadata.title}}{{metadata.title}}{{else}}{{personal.name}} Resume{{/if}}</title>
+    <link rel='stylesheet' href='style.css' />
+  </head>
+  <body>
+    <div class='resume-container'>
+
+      <!-- ─── Left Sidebar (32% width) ─────────────────────────────────── -->
+      <aside class='sidebar'>
+
+        {{#if personal.photoUrl}}
+          <div class='photo-container'>
+            <img src='{{personal.photoUrl}}' alt='{{personal.name}}' class='profile-photo' />
+          </div>
+        {{/if}}
+
+        <div class='identity-block'>
+          <h1 class='applicant-name'>{{personal.name}}</h1>
+          {{#if personal.jobTitle}}
+            <div class='applicant-title'>{{personal.jobTitle}}</div>
+          {{/if}}
+        </div>
+
+        <!-- Contact Information -->
+        <div class='contact-block'>
+          {{#if personal.email}}
+            <div class='contact-item'>
+              <span class='icon'>✉</span>
+              <span class='contact-val'>{{personal.email}}</span>
+            </div>
+          {{/if}}
+          {{#if personal.phone}}
+            <div class='contact-item'>
+              <span class='icon'>📞</span>
+              <span class='contact-val'>{{personal.phone}}</span>
+            </div>
+          {{/if}}
+          {{#if personal.location}}
+            <div class='contact-item'>
+              <span class='icon'>📍</span>
+              <span class='contact-val'>{{personal.location}}</span>
+            </div>
+          {{/if}}
+          {{#if personal.website}}
+            <div class='contact-item'>
+              <span class='icon'>🌐</span>
+              <a
+                href='{{personal.website}}'
+                target='_blank'
+                rel='noopener noreferrer'
+                class='contact-link'
+              >{{personal.website}}</a>
+            </div>
+          {{/if}}
+        </div>
+
+        <!-- Technical Skills -->
+        {{#if skills.length}}
+          <section class='sidebar-section' id='skills'>
+            <h2 class='section-title'><span class='section-icon'>🛠</span> Technical Skills</h2>
+            <div class='skills-list'>
+              {{#each skills}}
+                <div class='skill-row'>
+                  <span class='skill-name'>{{this}}</span>
+                  <span class='skill-rating'>★★★★{{#if @first}}★{{else}}☆{{/if}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Certifications -->
+        {{#if certifications.length}}
+          <section class='sidebar-section' id='certifications'>
+            <h2 class='section-title'><span class='section-icon'>📜</span> Certifications</h2>
+            <div class='cert-list'>
+              {{#each certifications}}
+                <div class='sidebar-item'>
+                  <div class='item-primary'>
+                    {{#if url}}
+                      <a href='{{url}}' target='_blank' rel='noopener noreferrer'>{{name}}</a>
+                    {{else}}
+                      {{name}}
+                    {{/if}}
+                  </div>
+                  <div class='item-secondary'>
+                    {{#if issuer}}{{issuer}}{{/if}}{{#if date}}{{#if issuer}}
+                        •
+                      {{/if}}{{date}}{{/if}}
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Awards & Recognition -->
+        {{#if achievements.length}}
+          <section class='sidebar-section' id='achievements'>
+            <h2 class='section-title'><span class='section-icon'>🏆</span> Awards</h2>
+            <div class='awards-list'>
+              {{#each achievements}}
+                <div class='sidebar-item'>
+                  <div class='item-primary'>{{title}}</div>
+                  {{#if date}}
+                    <div class='item-secondary'>{{date}}</div>
+                  {{/if}}
+                  {{#if description}}
+                    <div class='item-desc'>{{description}}</div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Online Presence -->
+        {{#if personal.linkedin}}
+          <section class='sidebar-section' id='online-presence'>
+            <h2 class='section-title'><span class='section-icon'>🌐</span> Online Presence</h2>
+            <div class='online-list'>
+              {{#if personal.linkedin}}
+                <div class='contact-item'>
+                  <span class='icon'>🔗</span>
+                  <span class='contact-val'>{{personal.linkedin}}</span>
+                </div>
+              {{/if}}
+              {{#if personal.github}}
+                <div class='contact-item'>
+                  <span class='icon'>💻</span>
+                  <span class='contact-val'>{{personal.github}}</span>
+                </div>
+              {{/if}}
+            </div>
+          </section>
+        {{else if personal.github}}
+          <section class='sidebar-section' id='online-presence'>
+            <h2 class='section-title'><span class='section-icon'>🌐</span> Online Presence</h2>
+            <div class='online-list'>
+              <div class='contact-item'>
+                <span class='icon'>💻</span>
+                <span class='contact-val'>{{personal.github}}</span>
+              </div>
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Languages -->
+        {{#if languages.length}}
+          <section class='sidebar-section' id='languages'>
+            <h2 class='section-title'><span class='section-icon'>🗣</span> Languages</h2>
+            <div class='languages-list'>
+              {{#each languages}}
+                <div class='skill-row'>
+                  <span class='skill-name'>{{this}}</span>
+                  <span class='skill-rating'>★★★★{{#if @first}}★{{else}}☆{{/if}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Interests / Declaration -->
+        {{#if declaration}}
+          <section class='sidebar-section' id='interests'>
+            <h2 class='section-title'><span class='section-icon'>🎯</span> Interests</h2>
+            <p class='sidebar-text'>{{declaration}}</p>
+          </section>
+        {{/if}}
+
+      </aside>
+
+      <!-- ─── Right Main Content (68% width) ────────────────────────────── -->
+      <main class='main-content'>
+
+        <!-- Professional Summary -->
+        {{#if summary}}
+          <section class='main-section' id='summary'>
+            <h2 class='main-section-title'><span class='section-icon'>👤</span>
+              Professional Summary</h2>
+            <p class='summary-text'>{{summary}}</p>
+          </section>
+        {{/if}}
+
+        <!-- Education -->
+        {{#if education.length}}
+          <section class='main-section' id='education'>
+            <h2 class='main-section-title'><span class='section-icon'>🎓</span> Education</h2>
+            <div class='entries-list'>
+              {{#each education}}
+                <div class='entry-item'>
+                  <div class='entry-header'>
+                    <div class='entry-title-wrap'>
+                      <strong class='entry-heading'>{{degree}}{{#if fieldOfStudy}}
+                          •
+                          {{fieldOfStudy}}{{/if}}</strong>
+                      <div class='entry-sub'>{{institution}}{{#if result}}
+                          •
+                          <span class='badge'>{{result}}</span>{{/if}}</div>
+                    </div>
+                    <div class='entry-date'>
+                      {{startDate}}{{#if endDate}} - {{endDate}}{{/if}}
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Professional Experience -->
+        {{#if experience.length}}
+          <section class='main-section' id='experience'>
+            <h2 class='main-section-title'><span class='section-icon'>💼</span>
+              Professional Experience</h2>
+            <div class='entries-list'>
+              {{#each experience}}
+                <div class='entry-item'>
+                  <div class='entry-header'>
+                    <div class='entry-title-wrap'>
+                      <strong class='entry-heading'>{{position}}</strong>
+                      <div class='entry-sub'>{{company}}{{#if location}} • {{location}}{{/if}}</div>
+                    </div>
+                    <div class='entry-date'>
+                      {{startDate}}
+                      -
+                      {{#if currentlyWorking}}Present{{else if
+                        endDate
+                      }}{{endDate}}{{else}}Present{{/if}}
+                    </div>
+                  </div>
+
+                  {{#if description}}
+                    <p class='entry-desc'>{{description}}</p>
+                  {{/if}}
+
+                  {{#if highlights.length}}
+                    <ul class='entry-bullets'>
+                      {{#each highlights}}
+                        <li>{{this}}</li>
+                      {{/each}}
+                    </ul>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Notable Projects -->
+        {{#if projects.length}}
+          <section class='main-section' id='projects'>
+            <h2 class='main-section-title'><span class='section-icon'>🚀</span>
+              Notable Projects</h2>
+            <div class='entries-list'>
+              {{#each projects}}
+                <div class='entry-item'>
+                  <div class='entry-header'>
+                    <div class='entry-title-wrap'>
+                      <h3 class='project-heading'>
+                        {{#if link}}
+                          <a
+                            href='{{link}}'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            class='project-link'
+                          >
+                            {{title}}
+                            <span class='arrow'>↗</span>
+                          </a>
+                        {{else}}
+                          {{title}}
+                        {{/if}}
+                      </h3>
+                      {{#if field}}
+                        <div class='entry-sub'>{{field}}</div>
+                      {{/if}}
+                    </div>
+                    {{#if startDate}}
+                      <div class='entry-date'>
+                        {{startDate}}{{#if endDate}} - {{endDate}}{{else}} - Present{{/if}}
+                      </div>
+                    {{/if}}
+                  </div>
+
+                  {{#if description}}
+                    <p class='entry-desc'>{{description}}</p>
+                  {{/if}}
+
+                  {{#if technologies.length}}
+                    <div class='tech-pill-list'>
+                      {{#each technologies}}
+                        <span class='tech-pill'>{{this}}</span>
+                      {{/each}}
+                    </div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+        <!-- Community Involvement / References -->
+        {{#if references.length}}
+          <section class='main-section' id='references'>
+            <h2 class='main-section-title'><span class='section-icon'>📌</span> References</h2>
+            <div class='references-list'>
+              {{#each references}}
+                <div class='ref-item'>
+                  <strong>{{name}}</strong>
+                  {{#if designation}}<span> • {{designation}}</span>{{/if}}
+                  {{#if company}}<span> ({{company}})</span>{{/if}}
+                  {{#if email}}<div class='ref-contact'>{{email}}</div>{{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        {{/if}}
+
+      </main>
+
+    </div>
+  </body>
+</html>

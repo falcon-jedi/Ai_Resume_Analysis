@@ -1,0 +1,591 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// AUTH MODELS
+
+model User {
+  id                 String    @id @default(cuid())
+  name               String?
+  email              String    @unique
+  emailVerified      DateTime?
+  password           String?
+  image              String?
+  jobTitle           String?
+  industry           String?
+  role               String    @default("USER")
+  hasEverPaid        Boolean   @default(false)  // true once user completes first paid purchase
+  razorpayCustomerId String?   @unique
+
+  // Pointer to the reserved "profile resume" (status = PROFILE).
+  // Created on the user's first explicit Profile save. It reuses the resume
+  // section tables but remains a separate, hidden data source.
+  profileResumeId    String?   @unique
+  profileResume      Resume?   @relation("UserProfileResume", fields: [profileResumeId], references: [id], onDelete: SetNull)
+
+  accounts      Account[]
+  resumes       Resume[]
+  subscription  Subscription?
+  usageTracking UsageTracking[]
+  payments      Payment[]
+  invoices      Invoice[]
+  atsAnalyses   ATSAnalysis[]
+  feedbacks     Feedback[]
+  auditLogs     AuditLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("password_reset_tokens")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RESUME BUILDER MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Resume {
+  id           String    @id @default(cuid())
+  userId       String
+  title        String
+  templateId   String    @default("classic-demo")
+  status       String    @default("DRAFT") // ResumeStatus enum in TypeScript
+  declaration  String?   @db.Text
+  sectionOrder String[]  @default([])
+  pdfUrl       String?
+  s3Key        String?
+  deletedAt    DateTime?
+
+  // Relations
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileOwner   User?            @relation("UserProfileResume")
+  personalInfo   PersonalInfo?
+  experiences    WorkExperience[]
+  education      Education[]
+  projects       Project[]
+  skills         Skill[]
+  certifications Certification[]
+  achievements   Achievement[]
+  languages      Language[]
+  references     Reference[]
+  atsAnalyses    ATSAnalysis[]
+  aiSuggestions  AISuggestion[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, deletedAt])
+  @@index([userId, status])
+  @@map("resumes")
+}
+
+model PersonalInfo {
+  id       String  @id @default(cuid())
+  resumeId String  @unique
+  fullName String
+  photoUrl String? @db.Text
+  jobTitle String?
+  email    String
+  phone    String?
+  location String?
+  website  String?
+  linkedin String?
+  github   String?
+  summary  String? @db.Text
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@map("personal_info")
+}
+
+model WorkExperience {
+  id               String   @id @default(cuid())
+  resumeId         String
+  company          String
+  position         String
+  location         String?
+  startDate        String
+  endDate          String?
+  currentlyWorking Boolean  @default(false)
+  description      String?  @db.Text
+  highlights       String[] @default([])
+  order            Int      @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId, order])
+  @@map("work_experiences")
+}
+
+model Education {
+  id           String  @id @default(cuid())
+  resumeId     String
+  institution  String
+  degree       String
+  fieldOfStudy String?
+  startDate    String
+  endDate      String?
+  result       String? // GPA, percentage, grade
+  order        Int     @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId, order])
+  @@map("education")
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  resumeId     String
+  title        String
+  field        String?
+  startDate    String?
+  endDate      String?
+  description  String?  @db.Text
+  technologies String[] @default([])
+  link         String?
+  order        Int      @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId, order])
+  @@map("projects")
+}
+
+model Skill {
+  id       String @id @default(cuid())
+  resumeId String
+  name     String
+  category String @default("TECHNICAL") // SkillCategory enum in TypeScript
+  order    Int    @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+  @@map("skills")
+}
+
+model Certification {
+  id       String  @id @default(cuid())
+  resumeId String
+  name     String
+  issuer   String?
+  date     String?
+  url      String?
+  order    Int     @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+  @@map("certifications")
+}
+
+model Achievement {
+  id          String  @id @default(cuid())
+  resumeId    String
+  title       String
+  date        String?
+  description String? @db.Text
+  order       Int     @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+  @@map("achievements")
+}
+
+model Language {
+  id          String  @id @default(cuid())
+  resumeId    String
+  name        String
+  proficiency String? // LanguageProficiency enum in TypeScript
+  order       Int     @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+  @@map("languages")
+}
+
+model Reference {
+  id          String  @id @default(cuid())
+  resumeId    String
+  name        String
+  designation String?
+  company     String?
+  email       String?
+  phone       String?
+  order       Int     @default(0)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+  @@map("references")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AI & ATS MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ATSAnalysis {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Optional link to a saved resume in the builder (may be null for uploaded files)
+  resumeId String?
+  resume   Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+
+  resumeName     String  @default("Uploaded Resume")
+  jobDescription String  @db.Text
+  jobTitle       String?
+
+  // Scores (0–100)
+  overallScore    Int
+  keywordScore    Int @default(0)
+  experienceScore Int @default(0)
+  skillsScore     Int @default(0)
+  educationScore  Int @default(0)
+  summaryScore    Int @default(0)
+  formattingScore Int @default(0)
+
+  // Keyword & skill arrays
+  matchedKeywords String[] @default([])
+  missingKeywords String[] @default([])
+  matchedSkills   String[] @default([])
+  missingSkills   String[] @default([])
+
+  // AI explanation (ATSExplanation shape from the AI service)
+  aiExplanation Json?
+
+  processingTimeMs Int?
+  version          String?
+  analysisDate     DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([userId, analysisDate])
+  @@index([resumeId])
+  @@map("ats_analyses")
+}
+
+model AISuggestion {
+  id        String  @id @default(cuid())
+  resumeId  String
+  section   String // "summary" | "experience" | "skills" | etc.
+  original  String  @db.Text
+  suggested String  @db.Text
+  accepted  Boolean @default(false)
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([resumeId])
+  @@map("ai_suggestions")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SUBSCRIPTION & USAGE MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Subscription {
+  id                     String    @id @default(cuid())
+  userId                 String    @unique
+  plan                   String    @default("FREE") // Plan enum in TypeScript
+  status                 String    @default("ACTIVE") // SubStatus enum: ACTIVE | EXPIRED
+  paymentProvider        String? // "razorpay" | "stripe"
+  paymentId              String? // External subscription ID
+  razorpaySubscriptionId String?   @unique
+  razorpayStatus         String?
+  currentPeriodStart     DateTime  @default(now())
+  currentPeriodEnd       DateTime?
+  cancelAtPeriodEnd      Boolean   @default(false)
+
+  // ── PLAN SNAPSHOT (frozen at purchase time) ──────────────────────────────
+  // Copied from pricing_plans at the moment of subscription creation.
+  // This ensures pricing changes never retroactively affect existing subscribers.
+  snapshotPlanName         String?  // e.g. "Pro"
+  snapshotPriceInr         Float?   // INR price paid at purchase time
+  snapshotPriceUsd         Float?   // USD price at purchase time
+  snapshotCurrency         String?  // "INR" | "USD"
+  snapshotBillingPeriod    String?  // "MONTHLY"
+  snapshotLimitAts         Int?     // ATS analysis limit at purchase time
+  snapshotLimitAi          Int?     // AI suggestion limit at purchase time
+  snapshotTemplateAccess   String?  // "FREE" | "ALL"
+  snapshotDurationDays     Int?     // plan duration in days at purchase time
+  // ─────────────────────────────────────────────────────────────────────────
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, status])
+  @@index([currentPeriodEnd, status])
+  @@map("subscriptions")
+}
+
+model UsageTracking {
+  userId        String
+  feature       String    // e.g., "ATS_ANALYSIS", "AI_SUGGESTION"
+  used          Int       @default(0)
+  limit         Int?      // accumulated limit (stacking); null = plan default
+  lastResetDate DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, feature])
+  @@map("usage_tracking")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PRICING MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PricingPlan {
+  id                    String  @id @default(cuid())
+  name                  String
+  slug                  String  @unique
+  priceInr              Float   @default(0)      // Price in Indian Rupees
+  priceUsd              Float   @default(0)      // Price in US Dollars
+  currency              String  @default("INR")  // Default display currency
+  templateAccess        String  @default("FREE") // "FREE" | "ALL"
+  durationDays          Int?                     // null = 30-day monthly; 7 = Plus plan
+  description           String
+  badge                 String?                  // "Most Popular" | "Recommended" | null
+  badgeColor            String?                  // "primary" | "secondary" | null
+  buttonText            String
+  buttonVariant         String  @default("outline") // "solid" | "outline"
+  isPopular             Boolean @default(false)
+  displayOrder          Int     @default(0)
+  isActive              Boolean @default(true)
+  razorpayPlanIdMonthly String?
+
+  limitAtsAnalysis  Int @default(1)
+  limitAiSuggestion Int @default(1)
+
+  features PlanFeature[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("pricing_plans")
+}
+
+model PlanFeature {
+  id        String  @id @default(cuid())
+  planId    String
+  feature   String
+  available Boolean @default(true)
+  highlight Boolean @default(false)
+  order     Int     @default(0)
+
+  plan PricingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId, order])
+  @@map("plan_features")
+}
+
+model ComparisonFeature {
+  id     String @id @default(cuid())
+  title  String
+  values Json // Record<planSlug, string> — e.g. { "free": "—", "pro": "check", "enterprise": "check" }
+  order  Int    @default(0)
+
+  @@map("comparison_features")
+}
+
+model Testimonial {
+  id          String  @id @default(cuid())
+  name        String
+  designation String
+  company     String?
+  image       String?
+  review      String  @db.Text
+  rating      Int     @default(5) // 1–5
+  isActive    Boolean @default(true)
+  order       Int     @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+model Payment {
+  id                String   @id @default(cuid())
+  userId            String
+  razorpayOrderId   String   @unique
+  razorpayPaymentId String?  @unique
+  amount            Float
+  currency          String
+  status            String   @default("PENDING") // PENDING, COMPLETED, FAILED
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  invoice Invoice?
+
+  @@index([userId])
+  @@index([status])
+  @@map("payments")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BILLING MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Invoice {
+  id                String  @id @default(cuid())
+  userId            String
+  paymentId         String  @unique // FK → Payment.id
+  razorpayOrderId   String
+  razorpayPaymentId String
+
+  invoiceNumber String @unique // e.g. "JP-2026-000001"
+
+  // Immutable financial columns — set ONCE at creation, never updated.
+  // Enforced in application layer via Prisma middleware.
+  subtotal  Float
+  taxAmount Float  @default(0)
+  total     Float
+  currency  String
+  status    String @default("paid") // "paid" | "void"
+  lineItems Json   // [{ description, quantity, unitPrice, amount }]
+
+  // PDF stored as raw bytes in Postgres (~50–150 KB per invoice).
+  // pdfUrl is set asynchronously by the cron job after generation.
+  pdfData Bytes?  // raw PDF buffer
+  pdfUrl  String? // e.g. "/api/invoice/{id}/download"
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payment Payment @relation(fields: [paymentId], references: [id])
+
+  createdAt DateTime @default(now())
+  // No updatedAt — invoices are immutable
+
+  @@index([userId, createdAt])
+  @@map("invoices")
+}
+
+model BackgroundJob {
+  id      String  @id @default(cuid())
+  type    String  // e.g. "GENERATE_INVOICE_PDF"
+  payload Json    // { invoiceId, userId, userEmail, userName }
+  status  String  @default("pending") // "pending" | "processing" | "completed" | "failed"
+  attempts Int    @default(0)
+  error   String? // last error message on failure
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@map("background_jobs")
+}
+
+model WebhookEvent {
+  id          String   @id @default(cuid())
+  eventId     String   @unique // x-razorpay-event-id header value
+  eventType   String            // e.g. "payment.captured"
+  processedAt DateTime @default(now())
+  payload     Json              // full parsed event body for audit
+
+  @@map("webhook_events")
+}
+
+model Feedback {
+  id        String  @id @default(cuid())
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  type      String  // "BUG" | "FEATURE" | "GENERAL" | "COMPLIMENT"
+  rating    Int?    // 1-5, optional
+  subject   String?
+  message   String  @db.Text
+  pageUrl   String?
+  userAgent String?
+  status    String  @default("NEW") // "NEW" | "IN_PROGRESS" | "RESOLVED" | "CLOSED"
+
+  // For unauthenticated users
+  name      String?
+  email     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status, createdAt])
+  @@map("feedbacks")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ADMIN MODELS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id        String  @id @default(cuid())
+  adminId   String
+  action    String  // e.g. "UPDATE_SUBSCRIPTION", "DELETE_USER", "UPDATE_FEEDBACK_STATUS"
+  target    String? // Target resource ID or email
+  details   Json    // Structured context (before/after values, etc.)
+  ipAddress String?
+  userAgent String?
+
+  admin User @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([adminId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+

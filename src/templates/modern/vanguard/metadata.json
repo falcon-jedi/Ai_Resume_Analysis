@@ -1,0 +1,27 @@
+{
+  "id": "vanguard",
+  "name": "Vanguard",
+  "category": "Modern",
+  "version": "1.0.0",
+  "thumbnail": "template.png",
+  "engine": "handlebars",
+  "ats": true,
+  "sections": [
+    "personal",
+    "summary",
+    "experience",
+    "education",
+    "projects",
+    "skills",
+    "certifications",
+    "achievements",
+    "languages",
+    "references"
+  ],
+  "slug": "vanguard",
+  "description": "A bold, two-tone approach for creative and tech professionals.",
+  "previewImage": "/api/template/vanguard/thumbnail",
+  "atsFriendly": true,
+  "isPremium": false,
+  "usageCount": 24500
+}

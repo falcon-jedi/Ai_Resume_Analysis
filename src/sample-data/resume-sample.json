@@ -1,0 +1,155 @@
+{
+  "personal": {
+    "name": "Alex Morgan",
+    "photoUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop",
+    "jobTitle": "Senior Full Stack Engineer",
+    "email": "alex.morgan@example.com",
+    "phone": "+1 (555) 019-2834",
+    "location": "San Francisco, CA",
+    "website": "https://alexmorgan.dev",
+    "linkedin": "linkedin.com/in/alexmorgan",
+    "github": "github.com/alexmorgan",
+    "summary": "Results-driven Full Stack Engineer with 5+ years of experience designing and shipping scalable web applications. Passionate about clean architecture, developer experience, and building products that users love. Proven track record of leading cross-functional teams and delivering high-impact features on time."
+  },
+
+  "education": [
+    {
+      "degree": "B.S. Computer Science",
+      "institution": "University of California, Berkeley",
+      "startDate": "Aug 2016",
+      "endDate": "May 2020",
+      "result": "3.8 GPA"
+    },
+    {
+      "degree": "Full Stack Web Development Bootcamp",
+      "institution": "App Academy",
+      "startDate": "Jun 2020",
+      "endDate": "Sep 2020",
+      "result": "Top 5% of cohort"
+    }
+  ],
+
+  "experience": [
+    {
+      "position": "Senior Full Stack Engineer",
+      "company": "Stripe",
+      "location": "San Francisco, CA",
+      "startDate": "Mar 2022",
+      "currentlyWorking": true,
+      "description": "Lead development of the Stripe Dashboard's billing and invoicing module, serving 3M+ merchants.",
+      "highlights": [
+        "Reduced API response time by 40% through query optimization and intelligent caching strategies.",
+        "Architected a real-time webhook event system processing 50K+ events per second.",
+        "Mentored a team of 4 junior engineers, establishing code review standards that cut bug rate by 30%."
+      ]
+    },
+    {
+      "position": "Software Engineer",
+      "company": "Airbnb",
+      "location": "San Francisco, CA",
+      "startDate": "Jul 2020",
+      "endDate": "Feb 2022",
+      "currentlyWorking": false,
+      "description": "Contributed to the core search and discovery platform used by 150M+ annual users.",
+      "highlights": [
+        "Built a personalized recommendation engine that increased booking conversion by 12%.",
+        "Migrated the search service from monolith to microservices, improving deployment frequency 3x.",
+        "Implemented A/B testing infrastructure enabling 20+ concurrent experiments."
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "JobPatra",
+      "field": "AI-Powered Resume Builder",
+      "startDate": "Jan 2024",
+      "endDate": "Present",
+      "description": "A SaaS resume builder with AI-assisted content generation, live preview, and ATS optimization. Built for job seekers who want to land interviews faster.",
+      "technologies": [
+        "Next.js",
+        "Prisma",
+        "PostgreSQL",
+        "Handlebars",
+        "TailwindCSS",
+        "OpenAI API"
+      ],
+      "link": "https://jobpatra.dev"
+    },
+    {
+      "title": "OpenMetrics",
+      "field": "Developer Tools",
+      "startDate": "Jun 2023",
+      "endDate": "Dec 2023",
+      "description": "An open-source observability dashboard that aggregates logs, traces, and metrics from any stack into a single, unified view.",
+      "technologies": ["TypeScript", "Node.js", "ClickHouse", "React", "Docker"],
+      "link": "https://github.com/alexmorgan/openmetrics"
+    }
+  ],
+
+  "skills": [
+    { "name": "TypeScript" },
+    { "name": "React" },
+    { "name": "Next.js" },
+    { "name": "Node.js" },
+    { "name": "PostgreSQL" },
+    { "name": "Prisma ORM" },
+    { "name": "Docker" },
+    { "name": "AWS" },
+    { "name": "REST APIs" },
+    { "name": "GraphQL" }
+  ],
+
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect – Associate",
+      "issuer": "Amazon Web Services",
+      "date": "Mar 2023",
+      "url": "https://aws.amazon.com/certification"
+    },
+    {
+      "name": "Google Cloud Professional Data Engineer",
+      "issuer": "Google Cloud",
+      "date": "Sep 2022",
+      "url": "https://cloud.google.com/certification"
+    }
+  ],
+
+  "achievements": [
+    {
+      "title": "Winner — Y Combinator Startup School Hackathon",
+      "date": "Oct 2023",
+      "description": "Built and pitched a developer productivity tool that won 1st place out of 340 teams."
+    },
+    {
+      "title": "Open Source Contributor — Next.js",
+      "date": "2022 – Present",
+      "description": "Authored 12 merged pull requests to the Next.js core repository, improving App Router documentation and fixing edge-case bugs."
+    }
+  ],
+
+  "languages": [
+    { "name": "English", "proficiency": "NATIVE" },
+    { "name": "Spanish", "proficiency": "FLUENT" },
+    { "name": "French", "proficiency": "INTERMEDIATE" }
+  ],
+
+  "references": [
+    {
+      "name": "Sarah Chen",
+      "designation": "Engineering Manager",
+      "company": "Stripe",
+      "email": "s.chen@stripe.com",
+      "phone": "+1 (415) 555-0101"
+    },
+    {
+      "name": "David Park",
+      "designation": "Staff Software Engineer",
+      "company": "Airbnb",
+      "email": "d.park@airbnb.com",
+      "phone": "+1 (415) 555-0192"
+    }
+  ],
+
+  "declaration": "I hereby declare that all the information furnished above is true and correct to the best of my knowledge."
+}

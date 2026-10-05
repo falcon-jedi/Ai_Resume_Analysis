@@ -1,0 +1,12 @@
+# Node modules and build artefacts
+node_modules
+.next
+out
+dist
+
+# Prisma generated client (very large, not source)
+prisma/client
+
+# Static assets that aren’t source code
+public/*
+static/*

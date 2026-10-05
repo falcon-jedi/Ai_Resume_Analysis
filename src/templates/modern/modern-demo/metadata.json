@@ -1,0 +1,28 @@
+{
+  "id": "modern-demo",
+  "name": "Modern Tech",
+  "category": "Modern",
+  "version": "1.0.0",
+  "thumbnail": "template.png",
+  "engine": "handlebars",
+  "ats": true,
+  "hasPhoto": true,
+  "sections": [
+    "personal",
+    "summary",
+    "experience",
+    "education",
+    "projects",
+    "skills",
+    "certifications",
+    "achievements",
+    "languages",
+    "references"
+  ],
+  "slug": "modern-demo",
+  "description": "Modern two-column layout with profile photo, dynamic icons, timeline accents, and interactive links.",
+  "previewImage": "/api/template/modern-demo/thumbnail",
+  "atsFriendly": true,
+  "isPremium": true,
+  "usageCount": 16400
+}

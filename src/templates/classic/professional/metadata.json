@@ -1,0 +1,27 @@
+{
+  "id": "professional",
+  "name": "The Professional",
+  "category": "Professional",
+  "version": "1.0.0",
+  "thumbnail": "template.png",
+  "engine": "handlebars",
+  "ats": true,
+  "sections": [
+    "personal",
+    "summary",
+    "experience",
+    "education",
+    "projects",
+    "skills",
+    "certifications",
+    "achievements",
+    "languages",
+    "references"
+  ],
+  "slug": "professional",
+  "description": "A balanced layout for mid-career professionals across all industries.",
+  "previewImage": "/api/template/professional/thumbnail",
+  "atsFriendly": true,
+  "isPremium": false,
+  "usageCount": 18900
+}

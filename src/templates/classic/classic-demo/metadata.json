@@ -1,0 +1,27 @@
+{
+  "id": "classic-demo",
+  "name": "The Standard",
+  "category": "Professional",
+  "version": "1.0.0",
+  "thumbnail": "template.png",
+  "engine": "handlebars",
+  "ats": true,
+  "sections": [
+    "personal",
+    "summary",
+    "experience",
+    "education",
+    "projects",
+    "skills",
+    "certifications",
+    "achievements",
+    "languages",
+    "references"
+  ],
+  "slug": "classic-demo",
+  "description": "Traditional layout with a focus on leadership and deep experience.",
+  "previewImage": "/api/template/classic-demo/thumbnail",
+  "atsFriendly": true,
+  "isPremium": false,
+  "usageCount": 12800
+}

@@ -1,0 +1,27 @@
+{
+  "id": "creative-edge",
+  "name": "Creative Edge",
+  "category": "Creative",
+  "version": "1.0.0",
+  "thumbnail": "template.png",
+  "engine": "handlebars",
+  "ats": false,
+  "sections": [
+    "personal",
+    "summary",
+    "experience",
+    "education",
+    "projects",
+    "skills",
+    "certifications",
+    "achievements",
+    "languages",
+    "references"
+  ],
+  "slug": "creative-edge",
+  "description": "Stand out with a unique sidebar and modern typography.",
+  "previewImage": "/api/template/creative-edge/thumbnail",
+  "atsFriendly": false,
+  "isPremium": false,
+  "usageCount": 15600
+}
